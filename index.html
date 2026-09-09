@@ -365,29 +365,23 @@ body {
 }
 .star {
   font-size: 13px;
-  color: var(--border);
   line-height: 1;
-  transition: color 0.12s;
-}
-.star.filled { color: var(--star); }
-.star-half {
-  font-size: 13px;
   color: var(--border);
-  line-height: 1;
-  position: relative;
-  transition: color 0.12s;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: var(--border);
+  transition: all 0.1s ease;
+  user-select: none;
 }
-.star-half.filled {
+.star.half {
+  background: linear-gradient(90deg, var(--star) 50%, var(--border) 50%);
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.star.full {
   color: var(--star);
-}
-.star-half.filled::after {
-  content: '★';
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--bg);
-  font-size: 13px;
-  line-height: 1;
+  -webkit-text-fill-color: var(--star);
+  background: none;
 }
 
 .book-date {
@@ -811,13 +805,10 @@ function starRating(rating, size=13) {
   if (!rating) return "";
   let s = "";
   for (let i = 1; i <= 5; i++) {
-    if (rating >= i) {
-      s += `<span class="star" style="font-size:${size}px;color:var(--star)">★</span>`;
-    } else if (rating >= i - 0.5) {
-      s += `<span class="star-half" style="font-size:${size}px;color:var(--star)">★</span>`;
-    } else {
-      s += `<span class="star" style="font-size:${size}px;color:var(--border)">★</span>`;
-    }
+    let cls = "star";
+    if (rating >= i) cls += " full";
+    else if (rating >= i - 0.5) cls += " half";
+    s += `<span class="${cls}" data-v="${i}" style="font-size:${size}px">★</span>`;
   }
   return `<span class="rating-stars">${s}</span>`;
 }
@@ -1111,93 +1102,56 @@ function closeAddPanel() {
 }
 
 function highlightStars(rating) {
-  // Clear all stars
-  $$(".star, .star-half", $("#ratingStars")).forEach(el => {
-    el.classList.remove("filled");
+  // Reset all stars to empty
+  $$(".star", $("#ratingStars")).forEach(el => {
+    el.classList.remove("full", "half");
   });
 
   if (!rating) return;
 
   const stars = $$(".star", $("#ratingStars"));
   for (let i = 0; i < 5; i++) {
-    const full = stars[i];
-    const threshold = i + 1;
+    const star = stars[i];
+    const threshold = i + 1; // 1..5
     if (rating >= threshold) {
-      full.classList.add("filled");
+      star.classList.add("full");
     } else if (rating >= threshold - 0.5) {
-      // half star
-      full.classList.add("filled");
-      const half = $(`.star-half[data-v="${threshold}"]`, $("#ratingStars"));
-      if (half) half.classList.add("filled");
+      star.classList.add("half");
     }
+    // else: stays empty (no class added)
   }
 }
 
 function clearStars() {
-  $$(".star, .star-half", $("#ratingStars")).forEach(el => {
-    el.classList.remove("filled");
+  $$(".star", $("#ratingStars")).forEach(el => {
+    el.classList.remove("full", "half");
   });
 }
 
-// Star click handler — supports full and half stars
+// Star click handler — supports full and half stars.
+// Each click on star N toggles: empty → full → half → empty
 const ratingStarsEl = $("#ratingStars");
+const staticStars = $$(".star", ratingStarsEl); // exactly 5 elements
 
-// Collect all full stars first
-const fullStars = $$(".star", ratingStarsEl);
+staticStars.forEach((star, i) => {
+  // Position value (1-indexed)
+  const pos = i + 1;
 
-// Insert half-star elements between full stars (in DOM)
-// We do this once — half stars live between star 0-1, 1-2, etc.
-for (let i = 0; i < 5; i++) {
-  // Already has half-star if created
-  let half = $(`.star-half[data-v="${i + 1}"]`, ratingStarsEl);
-  if (!half) {
-    half = document.createElement("span");
-    half.className = "star-half";
-    half.dataset.v = String(i + 1);
-    half.textContent = "★";
-    if (i < 4) {
-      // insert after full star i, before full star i+1
-      const nextFull = fullStars[i + 1];
-      if (nextFull) {
-        ratingStarsEl.insertBefore(half, nextFull);
-      } else {
-        ratingStarsEl.appendChild(half);
-      }
-    }
-  }
-}
-
-// Now attach click handlers to full stars
-fullStars.forEach((fullStar, i) => {
-  fullStar.addEventListener("click", () => {
-    const v = i + 1; // 1-indexed
+  star.addEventListener("click", () => {
     const current = parseFloat($("#addRating").value || 0);
-    if (current === v) {
-      // Toggle: full → half
-      $("#addRating").value = String(v - 0.5);
+    let next;
+    if (current === pos) {
+      // full → half
+      next = pos - 0.5;
+    } else if (current === pos - 0.5) {
+      // half → empty
+      next = 0;
     } else {
-      $("#addRating").value = String(v);
+      // empty (or lower) → full
+      next = pos;
     }
-    highlightStars(parseFloat($("#addRating").value || 0));
-  });
-
-  // Click on the half-star between this and the next full
-  const halfSelector = `.star-half[data-v="${i + 1}"]`;
-  const halfStar = $(halfSelector, ratingStarsEl);
-  if (halfStar) {
-    halfStar.addEventListener("click", () => {
-      $("#addRating").value = String(i + 0.5);
-      highlightStars(i + 0.5);
-    });
-  }
-});
-
-// Also bind any half stars that were already in the DOM (from the static HTML)
-$$(".star-half", ratingStarsEl).forEach(el => {
-  const v = parseFloat(el.dataset.v);
-  el.addEventListener("click", () => {
-    $("#addRating").value = String(v);
-    highlightStars(v);
+    $("#addRating").value = String(next);
+    highlightStars(next);
   });
 });
 
