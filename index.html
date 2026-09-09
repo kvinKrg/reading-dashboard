@@ -384,6 +384,76 @@ body {
   background: none;
 }
 
+/* Reading log grouping */
+.series-header {
+  margin-top: 20px;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.series-header.standalone {
+  border-bottom: 1px dashed var(--border);
+}
+.series-name-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.series-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.2px;
+}
+.series-header.standalone .series-name {
+  font-style: italic;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+.series-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.series-count {
+  font-weight: 500;
+}
+.series-avg {
+  color: var(--accent);
+  font-weight: 500;
+}
+.series-avg::before {
+  content: "\2605 ";
+}
+
+.tier-row {
+  margin: 2px 0 4px 8px;
+  padding-left: 12px;
+  border-left: 2px solid var(--border);
+}
+.tier-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+.tier-row[data-tier="5"] .tier-label,
+.tier-row[data-tier="4.5"] .tier-label,
+.tier-row[data-tier="4"] .tier-label { color: var(--star); }
+.tier-row[data-tier="3.5"] .tier-label,
+.tier-row[data-tier="3"] .tier-label { color: var(--text-dim); }
+.tier-row[data-tier="0"] .tier-label { color: var(--text-dim); opacity: 0.5; }
+.tier-books {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
 .book-date {
   font-size: 12px;
   color: var(--text-dim);
@@ -819,8 +889,17 @@ function bookEntryHTML(b, isTBR=false) {
   const ratingPart = b.rating ? starRating(b.rating, 12) : "";
 
   if (isTBR) {
+    const pColor = {
+      "Priority 1": "pcolor-1",
+      "Priority 2": "pcolor-2",
+      "Priority 3": "pcolor-3",
+      "Backburner": "",
+      "Waiting for Release": "pcolor-3",
+      "Currently Reading": "pcolor-1",
+    }[b.tbrPriority || b.status || ""] || "";
+    const pCls = "book-badge" + (b.tbrPriority || b.status || "").replace(/\s/g, "-").toLowerCase();
     return `
-      <div class="book-item" data-id="${b.title}|${b.author}|${b.series || ""}|${b.tbrPriority || ''}">
+      <div class="book-item" data-id="${b.title}|${b.author}|${b.series || ""}|${b.tbrPriority || b.status || ""}|tbr">
         <div class="book-main">
           <div class="book-title">${b.title}</div>
           <div class="book-authors">${b.author}</div>
@@ -828,7 +907,7 @@ function bookEntryHTML(b, isTBR=false) {
         ${seriesPart ? `<div class="book-sub">${seriesPart}</div>` : ""}
         <div class="book-meta">
           ${ratingPart}
-          <span class="book-badge priority-1 pcolor-1">${b.tbrPriority || "Priority 1"}</span>
+          <span class="book-badge ${pCls} ${pColor}">${b.tbrPriority || b.status || "Priority 1"}</span>
         </div>
       </div>`;
   }
@@ -896,27 +975,112 @@ function renderLog() {
   if (logFilter !== "all") {
     books = books.filter(b => b.status === logFilter);
   }
-  books.sort((a, b) => (b.dateRead || "").localeCompare(a.dateRead || ""));
 
-  $("#logContent").innerHTML = books.length
-    ? `<div class="book-list">${books.map(bookEntryHTML).join("")}</div>`
-    : `<div class="empty-state">No books with status "${logFilter}".</div>`;
+  // Group by series (or "Standalone" for books with no series)
+  const groups = {};
+  for (const b of books) {
+    const key = b.series || "__standalone__";
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(b);
+  }
+
+  // Sort groups: series by name, standalone last
+  const groupKeys = Object.keys(groups).sort((a, b) => {
+    if (a === "__standalone__") return 1;
+    if (b === "__standalone__") return -1;
+    return a.localeCompare(b);
+  });
+
+  // Rating tier labels (highest first)
+  const tierOrder = [5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1];
+
+  let html = "";
+
+  for (const key of groupKeys) {
+    const groupBooks = groups[key];
+    const seriesName = key === "__standalone__" ? null : key;
+
+    // Sort within group by bookNumber, then by dateRead
+    groupBooks.sort((a, b) => {
+      const an = a.bookNumber || 0;
+      const bn = b.bookNumber || 0;
+      if (an !== bn) return an - bn;
+      return (b.dateRead || "").localeCompare(a.dateRead || "");
+    });
+
+    // Compute series average (rated books only)
+    const rated = groupBooks.filter(b => b.rating != null);
+    const seriesAvg = rated.length ? (rated.reduce((s, b) => s + b.rating, 0) / rated.length) : null;
+
+    // Group by rating tier
+    const tiers = {};
+    for (const b of groupBooks) {
+      // Bucket rating into available tiers
+      let tier = null;
+      for (const t of tierOrder) {
+        if (b.rating !== null && b.rating >= t - 0.25) {
+          tier = t;
+          break;
+        }
+      }
+      if (!tier) tier = 0; // unrated
+      if (!tiers[tier]) tiers[tier] = [];
+      tiers[tier].push(b);
+    }
+
+    // Series header
+    if (seriesName) {
+      const avgStr = seriesAvg !== null ? seriesAvg.toFixed(1) : null;
+      html += `<div class="series-header">`;
+      html += `  <div class="series-name-row">`;
+      html += `    <div class="series-name">${seriesName}</div>`;
+      html += `    <div class="series-right">`;
+      html += `      <span class="series-count">${groupBooks.length} book${groupBooks.length !== 1 ? "s" : ""}</span>`;
+      if (avgStr) html += `<span class="series-avg">${avgStr}</span>`;
+      html += `    </div>`;
+      html += `  </div>`;
+      html += `</div>`;
+    } else {
+      html += `<div class="series-header standalone">
+        <div class="series-name-row">
+          <div class="series-name">Standalone</div>
+          <div class="series-right"><span class="series-count">${groupBooks.length} book${groupBooks.length !== 1 ? "s" : ""}</span></div>
+        </div>
+      </div>`;
+    }
+
+    // Render each tier
+    const usedTiers = Object.keys(tiers).map(Number).sort((a, b) => b - a).filter(t => tiers[t].length > 0);
+    for (const tier of usedTiers) {
+      const tierBooks = tiers[tier];
+      const tierDisplay = tier === 0 ? "Unrated" : `${tier}★`;
+      html += `<div class="tier-row" data-tier="${tier}"><div class="tier-label">${tierDisplay} — ${tierBooks.length}</div><div class="tier-books">`;
+      for (const b of tierBooks) {
+        html += bookEntryHTML(b, false);
+      }
+      html += `</div></div>`;
+    }
+
+    html += `<div style="height:16px;"></div>`;
+  }
+
+  $("#logContent").innerHTML = html || `<div class="empty-state">No books with status "${logFilter}".</div>`;
 }
 
 function renderTBR() {
   let books = [...data.tbr];
   if (tbrFilter !== "all") {
-    books = books.filter(b => (b.tbrPriority || "").includes(tbrFilter));
+    books = books.filter(b => (b.tbrPriority || b.status || "") === tbrFilter);
   }
-  const priorityOrder = ["Priority 1", "Priority 2", "Priority 3", "Backburner", "Waiting for Release"];
+  const priorityOrder = ["Priority 1", "Priority 2", "Priority 3", "Backburner", "Waiting for Release", "Currently Reading"];
   books.sort((a, b) => {
-    const ai = priorityOrder.indexOf(a.tbrPriority || "");
-    const bi = priorityOrder.indexOf(b.tbrPriority || "");
+    const ai = priorityOrder.indexOf(a.tbrPriority || a.status || "");
+    const bi = priorityOrder.indexOf(b.tbrPriority || b.status || "");
     return ai - bi;
   });
 
   $("#tbrContent").innerHTML = books.length
-    ? `<div class="book-list">${books.map(bookEntryHTML).join("")}</div>`
+    ? `<div class="book-list">${books.map(b => bookEntryHTML(b, true)).join("")}</div>`
     : `<div class="empty-state">No books in TBR yet.</div>`;
 }
 
@@ -1200,20 +1364,19 @@ document.addEventListener("click", (e) => {
       b.title === id.split("|")[0] &&
       b.author === id.split("|")[1] &&
       b.series === id.split("|")[2] &&
-      (b.bookNumber || "") === id.split("|")[3]
+      (b.bookNumber || "") === (id.split("|")[3] || "")
     );
     if (book) openAddPanel("edit", book);
   } else if (currentTab === "tbr") {
     const parts = id.split("|");
+    // parts: [title, author, series, tbrPriority, "tbr"]
     book = data.tbr.find(b =>
       b.title === parts[0] &&
       b.author === parts[1] &&
       b.series === parts[2] &&
-      b.tbrPriority === parts[3]
+      (b.tbrPriority || b.status || "") === parts[3]
     );
-    if (book) {
-      openAddPanel("edit", book);
-    }
+    if (book) openAddPanel("edit", book);
   }
 });
 
