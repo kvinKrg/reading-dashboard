@@ -31,6 +31,9 @@
   --pink: #b08aa0;
   --pink-bg: rgba(176, 138, 160, 0.12);
   --star: #e8c547;
+  --teal: #5b9c92;
+  --slate: #7580a0;
+  --rust: #a15c4a;
   --radius: 10px;
   --radius-sm: 6px;
   --shadow: 0 2px 8px rgba(0,0,0,0.4);
@@ -847,6 +850,7 @@ let data = { readingLog: [], tbr: [] };
 let currentTab = "home";
 let logFilter = "all";
 let tbrFilter = "all";
+let homeFilter = "all";
 let editingMode = null; // "add" | "edit-log" | "edit-tbr"
 let editingBook = null;  // the full book object being edited
 let editingBookKey = null; // "readingLog" | "tbr" — which array it lives in
@@ -854,6 +858,49 @@ let editingBookKey = null; // "readingLog" | "tbr" — which array it lives in
 // ── Helpers ──────────────────────────────────────────────────────────────────
 const $ = (s, el=document) => el.querySelector(s);
 const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+
+// SVG icons used in the reference layout
+const CHEVRON = `<svg class="chevron" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const EDIT_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>`;
+
+// Escape HTML entities
+function esc(v){ return String(v||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
+
+// Star row for tier display (matches reference SVG stars)
+function starRow(rating){
+  const full = Math.floor(rating);
+  const half = rating % 1 !== 0;
+  const outline = 5 - full - (half ? 1 : 0);
+  let html = '';
+  for(let i=0;i<full;i++) html += `<svg viewBox="0 0 24 24"><use href="#starPath" fill="currentColor"/></svg>`;
+  if(half) html += `<svg viewBox="0 0 24 24"><defs><clipPath id="hc${rating}"><rect x="0" y="0" width="12" height="24"/></clipPath></defs><use href="#starPath" fill="none" stroke="currentColor" stroke-width="1.3"/><use href="#starPath" fill="currentColor" clip-path="url(#hc${rating})"/></svg>`;
+  for(let i=0;i<outline;i++) html += `<svg class="outline" viewBox="0 0 24 24"><use href="#starPath" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>`;
+  return html;
+}
+
+// Rating label for tier display
+function ratingLabel(r){ return Number.isInteger(r) ? `${r}.0` : `${r}`; }
+
+// Status dot class (matches reference: finished=gold, ongoing=teal, paused=slate, dropped=rust)
+function statusDot(s){ return s.toLowerCase(); }
+
+// Status label with capital first letter
+function statusLabel(s){ return s.charAt(0).toUpperCase() + s.slice(1); }
+
+// Render progress dots for a series (matches reference layout)
+function renderProgressDots(status, current, total){
+  if(!total){
+    let dots = '';
+    for(let i=0;i<current;i++) dots += `<span class="dot filled-${status}"></span>`;
+    dots += `<span class="dot unknown"></span>`;
+    return `<div class="progress"><div class="dots">${dots}</div></div>`;
+  }
+  let dots = '';
+  for(let i=0;i<total;i++){
+    dots += `<span class="dot ${i < current ? 'filled-'+status : ''}"></span>`;
+  }
+  return `<div class="progress"><div class="dots">${dots}</div></div>`;
+}
 
 function statusBadgeHTML(status) {
   const cls = {
@@ -931,140 +978,354 @@ function bookEntryHTML(b, isTBR=false) {
 function renderHome() {
   const log = data.readingLog;
   const tbr = data.tbr;
-  const ongoing = log.filter(b => b.status === "Ongoing").length;
-  const finished = log.filter(b => b.status === "Finished").length;
-  const dropped = log.filter(b => b.status === "Dropped").length;
-  const paused = log.filter(b => b.status === "Paused").length;
-  const ratedFinished = finished ? log.filter(b => b.status === "Finished" && b.rating) : [];
-  const avgRating = ratedFinished.length ? (ratedFinished.reduce((s, b) => s + b.rating, 0) / ratedFinished.length) : 0;
 
-  $("#homeStats").innerHTML = `
-    <div class="stat-card"><div class="stat-value">${log.length}</div><div class="stat-label">Books Logged</div></div>
-    <div class="stat-card accent"><div class="stat-value">${ongoing}</div><div class="stat-label">Currently Reading</div></div>
-    <div class="stat-card"><div class="stat-value">${finished}</div><div class="stat-label">Finished</div></div>
-    <div class="stat-card"><div class="stat-value">${avgRating ? avgRating.toFixed(1) : "—"}</div><div class="stat-label">Avg Rating</div></div>
-  `;
+  // Compute the overall average rating (for display at top of Home)
+  const ratedBooks = log.filter(b => b.rating != null);
+  const overallAvg = ratedBooks.length ? (ratedBooks.reduce((s, b) => s + b.rating, 0) / ratedBooks.length) : null;
 
-  // Recent reading
-  const recent = [...log].sort((a, b) => (b.dateRead || "").localeCompare(a.dateRead || "")).slice(0, 5);
-  const activeTBR = tbr.filter(b => b.tbrPriority === "Priority 1").slice(0, 5);
+  // Build groups: series → tier → series entries; standalones → tier → standalone entries
+  const seriesGroups = {};
+  const standaloneGroups = {};
 
+  for (const b of log) {
+    const tier = b.rating != null ? Math.round(b.rating * 2) / 2 : 0; // round to nearest 0.5
+    if (b.series) {
+      if (!seriesGroups[tier]) seriesGroups[tier] = {};
+      if (!seriesGroups[tier][b.series]) {
+        seriesGroups[tier][b.series] = { name: b.series, books: [], status: null, total: null };
+      }
+      seriesGroups[tier][b.series].books.push(b);
+      if (!seriesGroups[tier][b.series].total) {
+        // Try to infer total from the data (max book number seen)
+        const maxNum = Math.max(...seriesGroups[tier][b.series].books.map(x => x.bookNumber || 0));
+        seriesGroups[tier][b.series].total = maxNum > 0 ? maxNum : null;
+      }
+    } else {
+      if (!standaloneGroups[tier]) standaloneGroups[tier] = [];
+      standaloneGroups[tier].push(b);
+    }
+  }
+
+  // Compute series status and average
+  const allTiers = new Set([...Object.keys(seriesGroups).map(Number), ...Object.keys(standaloneGroups).map(Number), 0]);
+  const sortedTiers = [...allTiers].sort((a, b) => b - a).filter(t => t > 0);
+
+  // Derive series status from book statuses
+  for (const tier of sortedTiers) {
+    if (!seriesGroups[tier]) continue;
+    for (const [name, s] of Object.entries(seriesGroups[tier])) {
+      const statuses = s.books.map(b => b.status);
+      const hasOngoing = statuses.includes("Ongoing") || statuses.includes("Currently Reading");
+      const hasFinished = statuses.includes("Finished");
+      const hasDropped = statuses.includes("Dropped");
+      const hasPaused = statuses.includes("Paused");
+      if (hasDropped) s.status = "Dropped";
+      else if (hasOngoing) s.status = "Ongoing";
+      else if (hasPaused) s.status = "Paused";
+      else if (hasFinished && s.books.every(b => b.status === "Finished")) s.status = "Finished";
+      else if (hasFinished) s.status = "Ongoing";
+      else s.status = "Ongoing";
+
+      // Series average (only rated books)
+      const rated = s.books.filter(b => b.rating != null);
+      s.avg = rated.length ? (rated.reduce((sum, b) => sum + b.rating, 0) / rated.length) : null;
+    }
+  }
+
+  // Home content: filter pills + tier sections (no stats, no lede)
   let html = "";
-  if (recent.length) {
-    html += `<div class="section-head"><div class="section-title">Recently Read</div><div class="section-meta">${recent.length} of ${log.length}</div></div>`;
-    html += `<div class="book-list">${recent.map(bookEntryHTML).join("")}</div>`;
-  } else {
-    html += `<div class="empty-state">No books logged yet.</div>`;
+
+  // Filter pills
+  const statuses = ["all", "Ongoing", "Finished", "Dropped", "Paused"];
+  html += `<div class="filter-bar" id="homeFilters">`;
+  html += statuses.map(s =>
+    `<button class="filter-chip ${currentTab === "home" && homeFilter === s ? "active" : ""}" data-filter="${s}">${s === "all" ? "All" : s}</button>`
+  ).join("");
+  html += `</div>`;
+
+  // Tier sections
+  for (const tier of sortedTiers) {
+    const seriesEntries = seriesGroups[tier] ? Object.values(seriesGroups[tier]) : [];
+    const standaloneEntries = standaloneGroups[tier] || [];
+
+    if (seriesEntries.length === 0 && standaloneEntries.length === 0) continue;
+
+    html += `<div class="tier-section" data-tier="${tier}">`;
+    // Tier header: stars + rating label
+    html += `<div class="tier-head">`;
+    html += `<div class="stars">${starRow(tier)}</div>`;
+    html += `<span class="tier-label">${tier}.0</span>`;
+    html += `</div>`;
+
+    // Series group
+    if (seriesEntries.length) {
+      html += `<div class="group group-series">`;
+      html += `<h3 class="group-label">Series</h3>`;
+      seriesEntries.sort((a, b) => a.name.localeCompare(b.name));
+      for (const s of seriesEntries) {
+        const readCount = s.books.filter(b => b.status === "Finished" || b.status === "Ongoing" || b.status === "Currently Reading").length;
+        const total = s.total || readCount;
+        const progDots = renderProgressDots(s.status, readCount, total);
+        const progLabel = total && total > readCount
+          ? `<span class="progress-label">${readCount} of ${total}</span>`
+          : `<span class="progress-label">${readCount} read so far</span>`;
+        html += `<div class="series-list-item" data-series="${esc(s.name)}">`;
+        html += `<details>`;
+        html += `<summary>`;
+        html += `<div class="item-row">`;
+        html += `<span class="item-name">${CHEVRON}${esc(s.name)}</span>`;
+        html += `<span class="item-status"><span class="dot-status ${statusDot(s.status)}"></span>${statusLabel(s.status)}</span>`;
+        html += `</div>`;
+        html += `</summary>`;
+        // Book detail rows inside
+        html += `<div class="book-detail">`;
+        const sortedBooks = [...s.books].sort((a, b) => (a.bookNumber || 0) - (b.bookNumber || 0));
+        for (const b of sortedBooks) {
+          html += `<div class="book-row" data-id="${b.title}|${b.author}|${b.series || ""}|${b.bookNumber || ""}|log">`;
+          html += `<span class="book-title">${b.bookNumber ? b.bookNumber + ". " : ""}${esc(b.title)}</span>`;
+          html += `<span class="book-meta">`;
+          if (b.rating) html += `<span class="book-rating">★ ${b.rating.toFixed(1)}</span>`;
+          if (b.dateRead) html += `<span>${b.dateRead}</span>`;
+          html += `<button class="icon-btn edit-book" data-id="${b.title}|${b.author}|${b.series || ""}|${b.bookNumber || ""}|log" title="Edit">${EDIT_ICON}</button>`;
+          html += `</span>`;
+          html += `</div>`;
+        }
+        html += `</div>`;
+        html += `</details>`;
+        html += `<div class="${progDots ? "progress" : ""}">${progDots}${progLabel}</div>`;
+        html += `</div>`;
+      }
+      html += `</div>`;
+    }
+
+    // Standalones group
+    if (standaloneEntries.length) {
+      html += `<div class="group group-standalone">`;
+      html += `<h3 class="group-label">Standalones</h3>`;
+      standaloneEntries.sort((a, b) => a.title.localeCompare(b.title));
+      for (const b of standaloneEntries) {
+        html += `<div class="standalone-list-item" data-id="${b.title}|${b.author}|${b.series || ""}|${b.bookNumber || ""}|log">`;
+        html += `<details>`;
+        html += `<summary>`;
+        html += `<div class="item-row">`;
+        html += `<span class="item-name">${CHEVRON}${esc(b.title)}</span>`;
+        html += `<span class="item-status"></span>`;
+        html += `</div>`;
+        html += `</summary>`;
+        html += `<div class="standalone-date"><span>Read ${b.dateRead || ""}</span><button class="icon-btn edit-book" data-id="${b.title}|${b.author}|${b.series || ""}|${b.bookNumber || ""}|log" title="Edit">${EDIT_ICON}</button></div>`;
+        html += `</details>`;
+        html += `</div>`;
+      }
+      html += `</div>`;
+    }
+
+    html += `</div>`;
   }
 
-  if (activeTBR.length) {
-    html += `<div style="margin-top:24px;"></div>`;
-    html += `<div class="section-head"><div class="section-title">Priority TBR</div><div class="section-meta">${activeTBR.length} books</div></div>`;
-    html += `<div class="book-list">${activeTBR.map(bookEntryHTML).join("")}</div>`;
-  }
-
-  if (!recent.length && !activeTBR.length) {
-    html = `<div class="empty-state">No data yet.<br>Add your first book below.</div>`;
+  // Empty state
+  if (!html) {
+    html = `<div class="empty-state">No books logged yet.<br>Add your first book below.</div>`;
   }
 
   $("#homeContent").innerHTML = html;
+
+  // Attach filter events
+  $("#homeFilters").querySelectorAll(".filter-chip").forEach(btn => {
+    btn.addEventListener("click", () => {
+      homeFilter = btn.dataset.filter;
+      renderHome();
+    });
+  });
+
+  // Attach edit events
+  $("#homeContent").querySelectorAll(".edit-book").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const id = btn.dataset.id;
+      const parts = id.split("|");
+      // parts: title|author|series|bookNumber|log
+      const book = data.readingLog.find(b =>
+        b.title === parts[0] && b.author === parts[1] &&
+        b.series === parts[2] && (b.bookNumber || "") === (parts[3] || "")
+      );
+      if (book) openAddPanel("edit", book);
+    });
+  });
+
+  // Expand/collapse — no extra work needed, <details> handles it
 }
 
 function renderLog() {
   let books = [...data.readingLog];
   if (logFilter !== "all") {
-    books = books.filter(b => b.status === logFilter);
+    books = books.filter(b => {
+      if (logFilter === "all") return true;
+      return b.status.toLowerCase() === logFilter;
+    });
   }
 
-  // Group by series (or "Standalone" for books with no series)
-  const groups = {};
+  // Group by tier (rating), then series, then standalones
+  const seriesGroups = {};
+  const standaloneGroups = {};
+
   for (const b of books) {
-    const key = b.series || "__standalone__";
-    if (!groups[key]) groups[key] = [];
-    groups[key].push(b);
+    const tier = b.rating != null ? Math.round(b.rating * 2) / 2 : 0;
+    if (b.series) {
+      if (!seriesGroups[tier]) seriesGroups[tier] = {};
+      if (!seriesGroups[tier][b.series]) {
+        seriesGroups[tier][b.series] = { name: b.series, books: [] };
+      }
+      seriesGroups[tier][b.series].books.push(b);
+    } else {
+      if (!standaloneGroups[tier]) standaloneGroups[tier] = [];
+      standaloneGroups[tier].push(b);
+    }
   }
 
-  // Sort groups: series by name, standalone last
-  const groupKeys = Object.keys(groups).sort((a, b) => {
-    if (a === "__standalone__") return 1;
-    if (b === "__standalone__") return -1;
-    return a.localeCompare(b);
-  });
+  // Compute series status and average
+  const allTiers = new Set([...Object.keys(seriesGroups).map(Number), ...Object.keys(standaloneGroups).map(Number), 0]);
+  const sortedTiers = [...allTiers].sort((a, b) => b - a).filter(t => t > 0);
 
-  // Rating tier labels (highest first)
-  const tierOrder = [5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1];
+  for (const tier of sortedTiers) {
+    if (!seriesGroups[tier]) continue;
+    for (const [name, s] of Object.entries(seriesGroups[tier])) {
+      const statuses = s.books.map(b => b.status);
+      const hasDropped = statuses.includes("Dropped");
+      const hasOngoing = statuses.includes("Ongoing") || statuses.includes("Currently Reading");
+      const hasPaused = statuses.includes("Paused");
+      const hasFinished = statuses.includes("Finished");
+      if (hasDropped) s.status = "Dropped";
+      else if (hasOngoing) s.status = "Ongoing";
+      else if (hasPaused) s.status = "Paused";
+      else if (hasFinished && s.books.every(b => b.status === "Finished")) s.status = "Finished";
+      else if (hasFinished) s.status = "Ongoing";
+      else s.status = "Ongoing";
 
+      const rated = s.books.filter(b => b.rating != null);
+      s.avg = rated.length ? (rated.reduce((sum, b) => sum + b.rating, 0) / rated.length) : null;
+    }
+  }
+
+  // Render
   let html = "";
 
-  for (const key of groupKeys) {
-    const groupBooks = groups[key];
-    const seriesName = key === "__standalone__" ? null : key;
+  // Filter pills
+  const statuses = ["all", "ongoing", "paused", "dropped", "finished"];
+  html += `<div class="filters" id="logFilters">`;
+  html += statuses.map(s =>
+    `<button class="${logFilter === s ? "active" : ""}" data-filter="${s}">${s === "all" ? "All" : s.charAt(0).toUpperCase() + s.slice(1)}</button>`
+  ).join("");
+  html += `</div>`;
 
-    // Sort within group by bookNumber, then by dateRead
-    groupBooks.sort((a, b) => {
-      const an = a.bookNumber || 0;
-      const bn = b.bookNumber || 0;
-      if (an !== bn) return an - bn;
-      return (b.dateRead || "").localeCompare(a.dateRead || "");
-    });
+  for (const tier of sortedTiers) {
+    const seriesEntries = seriesGroups[tier] ? Object.values(seriesGroups[tier]) : [];
+    const standaloneEntries = standaloneGroups[tier] || [];
 
-    // Compute series average (rated books only)
-    const rated = groupBooks.filter(b => b.rating != null);
-    const seriesAvg = rated.length ? (rated.reduce((s, b) => s + b.rating, 0) / rated.length) : null;
+    if (seriesEntries.length === 0 && standaloneEntries.length === 0) continue;
 
-    // Group by rating tier
-    const tiers = {};
-    for (const b of groupBooks) {
-      // Bucket rating into available tiers
-      let tier = null;
-      for (const t of tierOrder) {
-        if (b.rating !== null && b.rating >= t - 0.25) {
-          tier = t;
-          break;
-        }
+    html += `<section class="tier" data-tier="${tier}">`;
+    html += `<div class="tier-head">`;
+    html += `<div class="stars">${starRow(tier)}</div>`;
+    html += `<span class="tier-label">${ratingLabel(tier)}</span>`;
+    html += `</div>`;
+
+    if (seriesEntries.length) {
+      html += `<div class="group group-series">`;
+      html += `<h3 class="group-label">Series</h3>`;
+      const ul = document.createElement("ul");
+      ul.className = "series-list";
+      // We'll build HTML string instead
+      let serHtml = "";
+      seriesEntries.sort((a, b) => a.name.localeCompare(b.name));
+      for (const s of seriesEntries) {
+        const readCount = s.books.filter(b => b.status === "Finished" || b.status === "Ongoing" || b.status === "Currently Reading").length;
+        const total = Math.max(...s.books.map(b => b.bookNumber || 0)) || readCount;
+        const progDots = renderProgressDots(s.status, readCount, total);
+        const progLabel = total && total > readCount
+          ? `<span class="progress-label">${readCount} of ${total}</span>`
+          : `<span class="progress-label">${readCount} read so far</span>`;
+        const bookRows = s.books.sort((a, b) => (a.bookNumber || 0) - (b.bookNumber || 0)).map(b => {
+          return `<div class="book-row" data-id="${b.title}|${b.author}|${b.series || ""}|${b.bookNumber || ""}|log">
+            <span class="book-title">${b.bookNumber ? b.bookNumber + ". " : ""}${esc(b.title)}</span>
+            <span class="book-meta">
+              ${b.rating ? `<span class="book-rating">★ ${b.rating.toFixed(1)}</span>` : ""}
+              ${b.dateRead ? `<span>${b.dateRead}</span>` : ""}
+              <button class="icon-btn edit-book" data-id="${b.title}|${b.author}|${b.series || ""}|${b.bookNumber || ""}|log" title="Edit">${EDIT_ICON}</button>
+            </span>
+          </div>`;
+        }).join("");
+
+        serHtml += `<li data-status="${s.status}">`;
+        serHtml += `<details>`;
+        serHtml += `<summary>`;
+        serHtml += `<div class="item-row">`;
+        serHtml += `<span class="item-name">${CHEVRON}${esc(s.name)}</span>`;
+        serHtml += `<span class="item-status"><span class="dot-status ${statusDot(s.status)}"></span>${statusLabel(s.status)}</span>`;
+        serHtml += `</div>`;
+        serHtml += `</summary>`;
+        serHtml += `<div class="book-detail">${bookRows}</div>`;
+        serHtml += `<div class="progress">${progDots}${progLabel}</div>`;
+        serHtml += `</details>`;
+        serHtml += `</li>`;
       }
-      if (!tier) tier = 0; // unrated
-      if (!tiers[tier]) tiers[tier] = [];
-      tiers[tier].push(b);
-    }
-
-    // Series header
-    if (seriesName) {
-      const avgStr = seriesAvg !== null ? seriesAvg.toFixed(1) : null;
-      html += `<div class="series-header">`;
-      html += `  <div class="series-name-row">`;
-      html += `    <div class="series-name">${seriesName}</div>`;
-      html += `    <div class="series-right">`;
-      html += `      <span class="series-count">${groupBooks.length} book${groupBooks.length !== 1 ? "s" : ""}</span>`;
-      if (avgStr) html += `<span class="series-avg">${avgStr}</span>`;
-      html += `    </div>`;
-      html += `  </div>`;
+      html += serHtml;
       html += `</div>`;
-    } else {
-      html += `<div class="series-header standalone">
-        <div class="series-name-row">
-          <div class="series-name">Standalone</div>
-          <div class="series-right"><span class="series-count">${groupBooks.length} book${groupBooks.length !== 1 ? "s" : ""}</span></div>
-        </div>
-      </div>`;
     }
 
-    // Render each tier
-    const usedTiers = Object.keys(tiers).map(Number).sort((a, b) => b - a).filter(t => tiers[t].length > 0);
-    for (const tier of usedTiers) {
-      const tierBooks = tiers[tier];
-      const tierDisplay = tier === 0 ? "Unrated" : `${tier}★`;
-      html += `<div class="tier-row" data-tier="${tier}"><div class="tier-label">${tierDisplay} — ${tierBooks.length}</div><div class="tier-books">`;
-      for (const b of tierBooks) {
-        html += bookEntryHTML(b, false);
+    if (standaloneEntries.length) {
+      html += `<div class="group group-standalone">`;
+      html += `<h3 class="group-label">Standalones</h3>`;
+      standaloneEntries.sort((a, b) => a.title.localeCompare(b.title));
+      for (const b of standaloneEntries) {
+        html += `<li data-status="finished">`;
+        html += `<details>`;
+        html += `<summary>`;
+        html += `<div class="item-row">`;
+        html += `<span class="item-name">${CHEVRON}${esc(b.title)}</span>`;
+        html += `<span class="item-status"></span>`;
+        html += `</div>`;
+        html += `</summary>`;
+        html += `<div class="standalone-date"><span>Read ${b.dateRead || ""}</span><button class="icon-btn edit-book" data-id="${b.title}|${b.author}|${b.series || ""}|${b.bookNumber || ""}|log" title="Edit">${EDIT_ICON}</button></div>`;
+        html += `</details>`;
+        html += `</li>`;
       }
-      html += `</div></div>`;
+      html += `</div>`;
     }
 
-    html += `<div style="height:16px;"></div>`;
+    html += `</section>`;
   }
 
-  $("#logContent").innerHTML = html || `<div class="empty-state">No books with status "${logFilter}".</div>`;
+  if (!html) {
+    html = `<div class="empty-state">No books with status "${logFilter}".</div>`;
+  }
+
+  $("#logContent").innerHTML = html;
+
+  // Attach filter events
+  $("#logFilters").querySelectorAll("button").forEach(btn => {
+    btn.addEventListener("click", () => {
+      logFilter = btn.dataset.filter;
+      renderLog();
+    });
+  });
+
+  // Attach edit events
+  $("#logContent").querySelectorAll(".edit-book").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const id = btn.dataset.id;
+      const parts = id.split("|");
+      const book = data.readingLog.find(b =>
+        b.title === parts[0] && b.author === parts[1] &&
+        b.series === parts[2] && (b.bookNumber || "") === (parts[3] || "")
+      );
+      if (book) openAddPanel("edit", book);
+    });
+  });
+
+  applyLogFilter(logFilter);
 }
 
 function renderTBR() {
