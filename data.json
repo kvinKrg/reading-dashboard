@@ -731,7 +731,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 1"
     },
     {
       "title": "Cello's Gate",
@@ -741,7 +741,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 1"
     },
     {
       "title": "Demon Star",
@@ -751,7 +751,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 1"
     },
     {
       "title": "The Faith of Beasts",
@@ -761,7 +761,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 1"
     },
     {
       "title": "Bloodsworn Saga",
@@ -771,7 +771,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 2"
     },
     {
       "title": "Book of the Ancestor",
@@ -781,7 +781,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 2"
     },
     {
       "title": "The First Law",
@@ -791,7 +791,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 2"
     },
     {
       "title": "The Licanius Trilogy",
@@ -801,7 +801,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 2"
     },
     {
       "title": "The Stormlight Archive",
@@ -811,7 +811,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 2"
     },
     {
       "title": "Gentleman Bastard",
@@ -821,7 +821,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 3"
     },
     {
       "title": "Lightbringer",
@@ -831,7 +831,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 3"
     },
     {
       "title": "The Bound and the Broken",
@@ -841,7 +841,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 3"
     },
     {
       "title": "The Darkwater Legacy",
@@ -851,7 +851,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 3"
     },
     {
       "title": "The Fall of Hyperion",
@@ -861,7 +861,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Priority 3"
     },
     {
       "title": "Assassin's Apprentice",
@@ -871,7 +871,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Backburner"
     },
     {
       "title": "Blightfall",
@@ -881,7 +881,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Backburner"
     },
     {
       "title": "Scion",
@@ -891,7 +891,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Backburner"
     },
     {
       "title": "The Faithful and the Fallen",
@@ -901,7 +901,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Backburner"
     },
     {
       "title": "The Green Bone Saga",
@@ -911,7 +911,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Backburner"
     },
     {
       "title": "Red God",
@@ -921,7 +921,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Waiting for Release"
     },
     {
       "title": "The Justice of One",
@@ -931,7 +931,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Waiting for Release"
     },
     {
       "title": "The Lord of Demons",
@@ -941,7 +941,7 @@
       "rating": null,
       "dateRead": null,
       "status": "Currently Reading",
-      "tbrPriority": "Currently Reading"
+      "tbrPriority": "Waiting for Release"
     }
   ],
   "lastUpdated": "2026-09-09"
