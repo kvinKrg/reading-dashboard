@@ -1,0 +1,925 @@
+{
+  "readingLog": [
+    {
+      "title": "Dungeon Crawler Carl",
+      "author": "Matt Dinniman",
+      "series": "Dungeon Crawler Carl",
+      "bookNumber": 1,
+      "rating": 4.5,
+      "dateRead": "2026-09-06",
+      "status": "Ongoing"
+    },
+    {
+      "title": "Blood Song",
+      "author": "Anthony Ryan",
+      "series": "Raven's Shadow",
+      "bookNumber": 1,
+      "rating": 4.0,
+      "dateRead": "2026-09-01",
+      "status": "Ongoing"
+    },
+    {
+      "title": "The Last Contract of Isako",
+      "author": "Fonda Lee",
+      "series": null,
+      "bookNumber": null,
+      "rating": 3.0,
+      "dateRead": "2026-08-23",
+      "status": "Finished"
+    },
+    {
+      "title": "Shadows Upon Time",
+      "author": "Christopher Ruocchio",
+      "series": "The Sun Eater",
+      "bookNumber": 7,
+      "rating": 5.0,
+      "dateRead": "2026-08-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Disquiet Gods",
+      "author": "Christopher Ruocchio",
+      "series": "The Sun Eater",
+      "bookNumber": 6,
+      "rating": 5.0,
+      "dateRead": "2026-07-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Ashes of Man",
+      "author": "Christopher Ruocchio",
+      "series": "The Sun Eater",
+      "bookNumber": 5,
+      "rating": 5.0,
+      "dateRead": "2026-06-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Cold Wind",
+      "author": "Andrew Givler",
+      "series": "Ironbound",
+      "bookNumber": 2,
+      "rating": 5.0,
+      "dateRead": "2026-05-01",
+      "status": "Ongoing"
+    },
+    {
+      "title": "Kingdoms of Death",
+      "author": "Christopher Ruocchio",
+      "series": "The Sun Eater",
+      "bookNumber": 4,
+      "rating": 4.5,
+      "dateRead": "2026-05-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Ironbound",
+      "author": "Andrew Givler",
+      "series": "Ironbound",
+      "bookNumber": 1,
+      "rating": 4.5,
+      "dateRead": "2026-04-01",
+      "status": "Ongoing"
+    },
+    {
+      "title": "The Fires of Vengeance",
+      "author": "Evan Winter",
+      "series": "The Burning Series",
+      "bookNumber": 2,
+      "rating": 5.0,
+      "dateRead": "2026-04-01",
+      "status": "Ongoing"
+    },
+    {
+      "title": "The Rage of Dragons",
+      "author": "Evan Winter",
+      "series": "The Burning Series",
+      "bookNumber": 1,
+      "rating": 5.0,
+      "dateRead": "2026-03-23",
+      "status": "Ongoing"
+    },
+    {
+      "title": "The Strength of the Few",
+      "author": "James Islington",
+      "series": "Hierarchy",
+      "bookNumber": 2,
+      "rating": 4.5,
+      "dateRead": "2026-03-16",
+      "status": "Ongoing"
+    },
+    {
+      "title": "Demon in White",
+      "author": "Christopher Ruocchio",
+      "series": "The Sun Eater",
+      "bookNumber": 3,
+      "rating": 4.0,
+      "dateRead": "2026-01-19",
+      "status": "Finished"
+    },
+    {
+      "title": "Howling Dark",
+      "author": "Christopher Ruocchio",
+      "series": "The Sun Eater",
+      "bookNumber": 2,
+      "rating": 4.0,
+      "dateRead": "2025-10-15",
+      "status": "Finished"
+    },
+    {
+      "title": "Empire of Silence",
+      "author": "Christopher Ruocchio",
+      "series": "The Sun Eater",
+      "bookNumber": 1,
+      "rating": 4.0,
+      "dateRead": "2025-08-13",
+      "status": "Finished"
+    },
+    {
+      "title": "Light Bringer",
+      "author": "Pierce Brown",
+      "series": "Red Rising",
+      "bookNumber": 6,
+      "rating": 5.0,
+      "dateRead": "2025-07-09",
+      "status": "Ongoing"
+    },
+    {
+      "title": "Dark Age",
+      "author": "Pierce Brown",
+      "series": "Red Rising",
+      "bookNumber": 5,
+      "rating": 5.0,
+      "dateRead": "2025-06-22",
+      "status": "Ongoing"
+    },
+    {
+      "title": "Iron Gold",
+      "author": "Pierce Brown",
+      "series": "Red Rising",
+      "bookNumber": 4,
+      "rating": 5.0,
+      "dateRead": "2025-06-04",
+      "status": "Ongoing"
+    },
+    {
+      "title": "The Will of the Many",
+      "author": "James Islington",
+      "series": "Hierarchy",
+      "bookNumber": 1,
+      "rating": 4.5,
+      "dateRead": "2025-05-19",
+      "status": "Ongoing"
+    },
+    {
+      "title": "The Hero of Ages",
+      "author": "Brandon Sanderson",
+      "series": "Mistborn",
+      "bookNumber": 3,
+      "rating": 4.5,
+      "dateRead": "2025-04-22",
+      "status": "Finished"
+    },
+    {
+      "title": "The Well of Ascension",
+      "author": "Brandon Sanderson",
+      "series": "Mistborn",
+      "bookNumber": 2,
+      "rating": 4.5,
+      "dateRead": "2025-03-18",
+      "status": "Finished"
+    },
+    {
+      "title": "The Mercy of Gods",
+      "author": "James S.A. Corey",
+      "series": "The Captive's War",
+      "bookNumber": 1,
+      "rating": 4.0,
+      "dateRead": "2025-02-12",
+      "status": "Ongoing"
+    },
+    {
+      "title": "The Sword of Kaigen",
+      "author": "M.L. Wang",
+      "series": null,
+      "bookNumber": null,
+      "rating": 4.0,
+      "dateRead": "2024-09-06",
+      "status": "Finished"
+    },
+    {
+      "title": "Morning Star",
+      "author": "Pierce Brown",
+      "series": "Red Rising",
+      "bookNumber": 3,
+      "rating": 5.0,
+      "dateRead": "2024-07-23",
+      "status": "Ongoing"
+    },
+    {
+      "title": "Golden Son",
+      "author": "Pierce Brown",
+      "series": "Red Rising",
+      "bookNumber": 2,
+      "rating": 5.0,
+      "dateRead": "2024-07-06",
+      "status": "Ongoing"
+    },
+    {
+      "title": "Red Rising",
+      "author": "Pierce Brown",
+      "series": "Red Rising",
+      "bookNumber": 1,
+      "rating": 5.0,
+      "dateRead": "2024-06-16",
+      "status": "Ongoing"
+    },
+    {
+      "title": "Blue Mars",
+      "author": "Kim Stanley Robinson",
+      "series": "Mars Trilogy",
+      "bookNumber": 3,
+      "rating": 3.5,
+      "dateRead": "2024-05-12",
+      "status": "Finished"
+    },
+    {
+      "title": "Green Mars",
+      "author": "Kim Stanley Robinson",
+      "series": "Mars Trilogy",
+      "bookNumber": 2,
+      "rating": 3.5,
+      "dateRead": "2024-03-10",
+      "status": "Finished"
+    },
+    {
+      "title": "Red Mars",
+      "author": "Kim Stanley Robinson",
+      "series": "Mars Trilogy",
+      "bookNumber": 1,
+      "rating": 3.5,
+      "dateRead": "2024-01-26",
+      "status": "Finished"
+    },
+    {
+      "title": "Defiant",
+      "author": "Brandon Sanderson",
+      "series": "Skyward",
+      "bookNumber": 4,
+      "rating": 4.0,
+      "dateRead": "2023-12-10",
+      "status": "Finished"
+    },
+    {
+      "title": "Cytonic",
+      "author": "Brandon Sanderson",
+      "series": "Skyward",
+      "bookNumber": 3,
+      "rating": 4.0,
+      "dateRead": "2023-11-10",
+      "status": "Finished"
+    },
+    {
+      "title": "Starsight",
+      "author": "Brandon Sanderson",
+      "series": "Skyward",
+      "bookNumber": 2,
+      "rating": 4.0,
+      "dateRead": "2023-10-24",
+      "status": "Finished"
+    },
+    {
+      "title": "Skyward",
+      "author": "Brandon Sanderson",
+      "series": "Skyward",
+      "bookNumber": 1,
+      "rating": 4.0,
+      "dateRead": "2023-10-11",
+      "status": "Finished"
+    },
+    {
+      "title": "Mistborn: The Final Empire",
+      "author": "Brandon Sanderson",
+      "series": "Mistborn",
+      "bookNumber": 1,
+      "rating": 4.5,
+      "dateRead": "2023-09-28",
+      "status": "Finished"
+    },
+    {
+      "title": "Hyperion",
+      "author": "Dan Simmons",
+      "series": "Hyperion Cantos",
+      "bookNumber": 1,
+      "rating": 4.0,
+      "dateRead": "2023-07-22",
+      "status": "Ongoing"
+    },
+    {
+      "title": "Abandon",
+      "author": "Blake Crouch",
+      "series": null,
+      "bookNumber": null,
+      "rating": 2.0,
+      "dateRead": "2023-05-18",
+      "status": "Finished"
+    },
+    {
+      "title": "Run",
+      "author": "Blake Crouch",
+      "series": null,
+      "bookNumber": null,
+      "rating": 3.0,
+      "dateRead": "2023-04-22",
+      "status": "Finished"
+    },
+    {
+      "title": "Children of Ruin",
+      "author": "Adrian Tchaikovsky",
+      "series": "Children of Time",
+      "bookNumber": 2,
+      "rating": 2.0,
+      "dateRead": "2023-04-04",
+      "status": "Dropped"
+    },
+    {
+      "title": "The Last Town",
+      "author": "Blake Crouch",
+      "series": "Wayward Pines",
+      "bookNumber": 3,
+      "rating": 3.5,
+      "dateRead": "2023-03-17",
+      "status": "Finished"
+    },
+    {
+      "title": "Wayward",
+      "author": "Blake Crouch",
+      "series": "Wayward Pines",
+      "bookNumber": 2,
+      "rating": 3.5,
+      "dateRead": "2023-03-08",
+      "status": "Finished"
+    },
+    {
+      "title": "Pines",
+      "author": "Blake Crouch",
+      "series": "Wayward Pines",
+      "bookNumber": 1,
+      "rating": 3.5,
+      "dateRead": "2023-02-18",
+      "status": "Finished"
+    },
+    {
+      "title": "Children of Time",
+      "author": "Adrian Tchaikovsky",
+      "series": "Children of Time",
+      "bookNumber": 1,
+      "rating": 4.0,
+      "dateRead": "2022-12-14",
+      "status": "Dropped"
+    },
+    {
+      "title": "The Hundred Thousand Kingdoms",
+      "author": "N.K. Jemisin",
+      "series": "Inheritance Trilogy",
+      "bookNumber": 1,
+      "rating": 3.0,
+      "dateRead": "2022-11-25",
+      "status": "Dropped"
+    },
+    {
+      "title": "The Stone Sky",
+      "author": "N.K. Jemisin",
+      "series": "The Broken Earth",
+      "bookNumber": 3,
+      "rating": 5.0,
+      "dateRead": "2022-11-09",
+      "status": "Finished"
+    },
+    {
+      "title": "The Obelisk Gate",
+      "author": "N.K. Jemisin",
+      "series": "The Broken Earth",
+      "bookNumber": 2,
+      "rating": 5.0,
+      "dateRead": "2022-10-16",
+      "status": "Finished"
+    },
+    {
+      "title": "The Fifth Season",
+      "author": "N.K. Jemisin",
+      "series": "The Broken Earth",
+      "bookNumber": 1,
+      "rating": 5.0,
+      "dateRead": "2022-09-30",
+      "status": "Finished"
+    },
+    {
+      "title": "Ender's Game",
+      "author": "Orson Scott Card",
+      "series": "Ender's Saga",
+      "bookNumber": 1,
+      "rating": 3.5,
+      "dateRead": "2022-09-07",
+      "status": "Paused"
+    },
+    {
+      "title": "Rogue Protocol",
+      "author": "Martha Wells",
+      "series": "The Murderbot Diaries",
+      "bookNumber": 3,
+      "rating": 2.0,
+      "dateRead": "2022-08-13",
+      "status": "Dropped"
+    },
+    {
+      "title": "Upgrade",
+      "author": "Blake Crouch",
+      "series": null,
+      "bookNumber": null,
+      "rating": 3.5,
+      "dateRead": "2022-08-07",
+      "status": "Finished"
+    },
+    {
+      "title": "Hidden Pictures",
+      "author": "Jason Rekulak",
+      "series": null,
+      "bookNumber": null,
+      "rating": 5.0,
+      "dateRead": "2022-07-21",
+      "status": "Finished"
+    },
+    {
+      "title": "Artificial Condition",
+      "author": "Martha Wells",
+      "series": "The Murderbot Diaries",
+      "bookNumber": 2,
+      "rating": 2.0,
+      "dateRead": "2022-07-07",
+      "status": "Dropped"
+    },
+    {
+      "title": "All Systems Red",
+      "author": "Martha Wells",
+      "series": "The Murderbot Diaries",
+      "bookNumber": 1,
+      "rating": 2.0,
+      "dateRead": "2022-06-27",
+      "status": "Dropped"
+    },
+    {
+      "title": "Recursion",
+      "author": "Blake Crouch",
+      "series": null,
+      "bookNumber": null,
+      "rating": 4.0,
+      "dateRead": "2022-06-20",
+      "status": "Finished"
+    },
+    {
+      "title": "Dark Matter",
+      "author": "Blake Crouch",
+      "series": null,
+      "bookNumber": null,
+      "rating": 5.0,
+      "dateRead": "2022-06-11",
+      "status": "Finished"
+    },
+    {
+      "title": "Heretics of Dune",
+      "author": "Frank Herbert",
+      "series": "Dune",
+      "bookNumber": 5,
+      "rating": 3.5,
+      "dateRead": "2022-06-06",
+      "status": "Paused"
+    },
+    {
+      "title": "God Emperor of Dune",
+      "author": "Frank Herbert",
+      "series": "Dune",
+      "bookNumber": 4,
+      "rating": 3.5,
+      "dateRead": "2022-05-17",
+      "status": "Paused"
+    },
+    {
+      "title": "Children of Dune",
+      "author": "Frank Herbert",
+      "series": "Dune",
+      "bookNumber": 3,
+      "rating": 4.0,
+      "dateRead": "2022-04-17",
+      "status": "Paused"
+    },
+    {
+      "title": "Dune Messiah",
+      "author": "Frank Herbert",
+      "series": "Dune",
+      "bookNumber": 2,
+      "rating": 4.5,
+      "dateRead": "2022-03-22",
+      "status": "Paused"
+    },
+    {
+      "title": "Dune",
+      "author": "Frank Herbert",
+      "series": "Dune",
+      "bookNumber": 1,
+      "rating": 4.5,
+      "dateRead": "2022-02-28",
+      "status": "Paused"
+    },
+    {
+      "title": "Artemis",
+      "author": "Andy Weir",
+      "series": null,
+      "bookNumber": null,
+      "rating": 3.0,
+      "dateRead": "2022-02-07",
+      "status": "Finished"
+    },
+    {
+      "title": "The Forever War",
+      "author": "Joe Haldeman",
+      "series": "The Forever War",
+      "bookNumber": 1,
+      "rating": 3.0,
+      "dateRead": "2022-01-25",
+      "status": "Dropped"
+    },
+    {
+      "title": "The Last Colony",
+      "author": "John Scalzi",
+      "series": "Old Man's War",
+      "bookNumber": 3,
+      "rating": 3.5,
+      "dateRead": "2022-01-16",
+      "status": "Finished"
+    },
+    {
+      "title": "The Ghost Brigades",
+      "author": "John Scalzi",
+      "series": "Old Man's War",
+      "bookNumber": 2,
+      "rating": 3.5,
+      "dateRead": "2022-01-06",
+      "status": "Finished"
+    },
+    {
+      "title": "Leviathan Wakes",
+      "author": "James S.A. Corey",
+      "series": "The Expanse",
+      "bookNumber": 1,
+      "rating": 4.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Leviathan Falls",
+      "author": "James S.A. Corey",
+      "series": "The Expanse",
+      "bookNumber": 9,
+      "rating": 4.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Cibola Burn",
+      "author": "James S.A. Corey",
+      "series": "The Expanse",
+      "bookNumber": 4,
+      "rating": 4.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Caliban's War",
+      "author": "James S.A. Corey",
+      "series": "The Expanse",
+      "bookNumber": 2,
+      "rating": 4.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Babylon's Ashes",
+      "author": "James S.A. Corey",
+      "series": "The Expanse",
+      "bookNumber": 6,
+      "rating": 4.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Abaddon's Gate",
+      "author": "James S.A. Corey",
+      "series": "The Expanse",
+      "bookNumber": 3,
+      "rating": 4.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Old Man's War",
+      "author": "John Scalzi",
+      "series": "Old Man's War",
+      "bookNumber": 1,
+      "rating": 3.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Man's Search for Meaning",
+      "author": "Viktor E. Frankl",
+      "series": null,
+      "bookNumber": null,
+      "rating": 3.0,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "The Martian",
+      "author": "Andy Weir",
+      "series": null,
+      "bookNumber": null,
+      "rating": 3.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "The Art of Resilience",
+      "author": "Ross Edgley",
+      "series": null,
+      "bookNumber": null,
+      "rating": 3.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Can't Hurt Me: Master Your Mind and Defy the Odds",
+      "author": "David Goggins",
+      "series": null,
+      "bookNumber": null,
+      "rating": 4.0,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Project Hail Mary",
+      "author": "Andy Weir",
+      "series": null,
+      "bookNumber": null,
+      "rating": 5.0,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "11/22/63",
+      "author": "Stephen King",
+      "series": null,
+      "bookNumber": null,
+      "rating": 5.0,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Tiamat's Wrath",
+      "author": "James S.A. Corey",
+      "series": "The Expanse",
+      "bookNumber": 8,
+      "rating": 4.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Persepolis Rising",
+      "author": "James S.A. Corey",
+      "series": "The Expanse",
+      "bookNumber": 7,
+      "rating": 4.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    },
+    {
+      "title": "Nemesis Games",
+      "author": "James S.A. Corey",
+      "series": "The Expanse",
+      "bookNumber": 5,
+      "rating": 4.5,
+      "dateRead": "2021-01-01",
+      "status": "Finished"
+    }
+  ],
+  "tbr": [
+    {
+      "title": "Tower Lord",
+      "author": "Anthony Ryan",
+      "series": "Raven's Shadow",
+      "bookNumber": 2,
+      "rating": null,
+      "dateRead": null,
+      "status": "Currently Reading"
+    },
+    {
+      "title": "Carl's Doomsday Scenario",
+      "author": "Matt Dinniman",
+      "series": "Dungeon Crawler Carl",
+      "bookNumber": 2,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 1"
+    },
+    {
+      "title": "Cello's Gate",
+      "author": "Maurice Africh",
+      "series": "The Sky Pirates of Imperia",
+      "bookNumber": 1,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 1"
+    },
+    {
+      "title": "Demon Star",
+      "author": "Jesse Aragon",
+      "series": null,
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 1"
+    },
+    {
+      "title": "The Faith of Beasts",
+      "author": "James S.A. Corey",
+      "series": "Captives War",
+      "bookNumber": 2,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 1"
+    },
+    {
+      "title": "Bloodsworn Saga",
+      "author": "John Gwynne",
+      "series": "Bloodsworn Saga",
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 2"
+    },
+    {
+      "title": "Book of the Ancestor",
+      "author": "Mark Lawrence",
+      "series": "Book of the Ancestor",
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 2"
+    },
+    {
+      "title": "The First Law",
+      "author": "Joe Abercrombie",
+      "series": "The First Law",
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 2"
+    },
+    {
+      "title": "The Licanius Trilogy",
+      "author": "James Islington",
+      "series": "The Licanius Trilogy",
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 2"
+    },
+    {
+      "title": "The Stormlight Archive",
+      "author": "Brandon Sanderson",
+      "series": "The Stormlight Archive",
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 2"
+    },
+    {
+      "title": "Gentleman Bastard",
+      "author": "Scott Lynch",
+      "series": "Gentleman Bastard",
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 3"
+    },
+    {
+      "title": "Lightbringer",
+      "author": "Brent Weeks",
+      "series": "Lightbringer",
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 3"
+    },
+    {
+      "title": "The Bound and the Broken",
+      "author": "Ryan Cahill",
+      "series": "The Bound and the Broken",
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 3"
+    },
+    {
+      "title": "The Darkwater Legacy",
+      "author": "Chris Wooding",
+      "series": "The Darkwater Legacy",
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 3"
+    },
+    {
+      "title": "The Fall of Hyperion",
+      "author": "Dan Simmons",
+      "series": "Hyperion Cantos",
+      "bookNumber": 2,
+      "rating": null,
+      "dateRead": null,
+      "status": "Priority 3"
+    },
+    {
+      "title": "Assassin's Apprentice",
+      "author": "Robin Hobb",
+      "series": "The Farseer Trilogy",
+      "bookNumber": 1,
+      "rating": null,
+      "dateRead": null,
+      "status": "Backburner"
+    },
+    {
+      "title": "Blightfall",
+      "author": "Brandon Sanderson & Janci Patterson",
+      "series": "Riftwake",
+      "bookNumber": 1,
+      "rating": null,
+      "dateRead": null,
+      "status": "Backburner"
+    },
+    {
+      "title": "Scion",
+      "author": "James Islington",
+      "series": "Scion",
+      "bookNumber": 1,
+      "rating": null,
+      "dateRead": null,
+      "status": "Backburner"
+    },
+    {
+      "title": "The Faithful and the Fallen",
+      "author": "John Gwynne",
+      "series": "The Faithful and the Fallen",
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Backburner"
+    },
+    {
+      "title": "The Green Bone Saga",
+      "author": "Fonda Lee",
+      "series": "The Green Bone Saga",
+      "bookNumber": null,
+      "rating": null,
+      "dateRead": null,
+      "status": "Backburner"
+    },
+    {
+      "title": "Red God",
+      "author": "Pierce Brown",
+      "series": "Red Rising",
+      "bookNumber": 7,
+      "rating": null,
+      "dateRead": null,
+      "status": "Waiting for Release"
+    },
+    {
+      "title": "The Justice of One",
+      "author": "James Islington",
+      "series": "Hierarchy",
+      "bookNumber": 3,
+      "rating": null,
+      "dateRead": null,
+      "status": "Waiting for Release"
+    },
+    {
+      "title": "The Lord of Demons",
+      "author": "Evan Winter",
+      "series": "The Burning Series",
+      "bookNumber": 3,
+      "rating": null,
+      "dateRead": null,
+      "status": "Waiting for Release"
+    }
+  ],
+  "lastUpdated": "2026-09-09"
+}
