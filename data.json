@@ -720,7 +720,8 @@
       "bookNumber": 2,
       "rating": null,
       "dateRead": null,
-      "status": "Currently Reading"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "Carl's Doomsday Scenario",
@@ -729,7 +730,8 @@
       "bookNumber": 2,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 1"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "Cello's Gate",
@@ -738,7 +740,8 @@
       "bookNumber": 1,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 1"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "Demon Star",
@@ -747,7 +750,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 1"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "The Faith of Beasts",
@@ -756,7 +760,8 @@
       "bookNumber": 2,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 1"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "Bloodsworn Saga",
@@ -765,7 +770,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 2"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "Book of the Ancestor",
@@ -774,7 +780,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 2"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "The First Law",
@@ -783,7 +790,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 2"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "The Licanius Trilogy",
@@ -792,7 +800,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 2"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "The Stormlight Archive",
@@ -801,7 +810,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 2"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "Gentleman Bastard",
@@ -810,7 +820,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 3"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "Lightbringer",
@@ -819,7 +830,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 3"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "The Bound and the Broken",
@@ -828,7 +840,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 3"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "The Darkwater Legacy",
@@ -837,7 +850,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 3"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "The Fall of Hyperion",
@@ -846,7 +860,8 @@
       "bookNumber": 2,
       "rating": null,
       "dateRead": null,
-      "status": "Priority 3"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "Assassin's Apprentice",
@@ -855,7 +870,8 @@
       "bookNumber": 1,
       "rating": null,
       "dateRead": null,
-      "status": "Backburner"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "Blightfall",
@@ -864,7 +880,8 @@
       "bookNumber": 1,
       "rating": null,
       "dateRead": null,
-      "status": "Backburner"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "Scion",
@@ -873,7 +890,8 @@
       "bookNumber": 1,
       "rating": null,
       "dateRead": null,
-      "status": "Backburner"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "The Faithful and the Fallen",
@@ -882,7 +900,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Backburner"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "The Green Bone Saga",
@@ -891,7 +910,8 @@
       "bookNumber": null,
       "rating": null,
       "dateRead": null,
-      "status": "Backburner"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "Red God",
@@ -900,7 +920,8 @@
       "bookNumber": 7,
       "rating": null,
       "dateRead": null,
-      "status": "Waiting for Release"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "The Justice of One",
@@ -909,7 +930,8 @@
       "bookNumber": 3,
       "rating": null,
       "dateRead": null,
-      "status": "Waiting for Release"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     },
     {
       "title": "The Lord of Demons",
@@ -918,7 +940,8 @@
       "bookNumber": 3,
       "rating": null,
       "dateRead": null,
-      "status": "Waiting for Release"
+      "status": "Currently Reading",
+      "tbrPriority": "Currently Reading"
     }
   ],
   "lastUpdated": "2026-09-09"
